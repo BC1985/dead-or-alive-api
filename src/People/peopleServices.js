@@ -13,6 +13,12 @@ const peopleServices = {
       .from("people")
       .select("*")
       .where({ id });
+  },
+  deletePerson(knex, id) {
+    return knex("people")
+      .from("people")
+      .where({ id })
+      .del();
   }
 };
 
