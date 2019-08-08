@@ -11,25 +11,34 @@ peopleRouter.route("/").get((req, res, next) => {
       res.json(people);
     })
     .catch(next);
+});
+peopleRouter.route("/").post(jsonParser, (req, res, next) => {
+  const knexInstance = req.app.get("db");
+  const { person_name, dates, status, description } = req.body;
+  const newPerson = { person_name, dates, status, description };
+  for (const [key, value] of Object.entries(newPerson))
+    if (value === null) {
+      return res
+        .status(400)
+        .json({ error: { message: `Missing ${key} in request body` } });
+    }
 
-  peopleRouter.route("/").post(jsonParser, (req, res, next) => {
-    const knexInstance = req.app.get("db");
-    const { person_name, dates, status, description } = req.body;
-    const newPerson = { person_name, dates, status, description };
-    for (const [key, value] of Object.entries(newPerson))
-      if (value === null) {
-        return res
-          .status(400)
-          .json({ error: { message: `Missing ${key} in request body` } });
-      }
-
-    peopleServices
-      .postPerson(knexInstance, newPerson)
-      .then(person => {
-        const newPerson = person[0];
-        res.status(201).json(newPerson);
-      })
-      .catch(next);
+  peopleServices
+    .postPerson(knexInstance, newPerson)
+    .then(person => {
+      const newPerson = person[0];
+      res.status(201).json(newPerson);
+    })
+    .catch(next);
+});
+peopleRouter.route("/:id").get((req, res, next) => {
+  const knexInstance = req.app.get("db");
+  const { id } = req.params;
+  peopleServices.getPersonById(knexInstance, id).then(person => {
+    if (!person || person.length === 0) {
+      res.status(404).json({ error: { message: "Person does not exist" } });
+    }
+    res.status(200).json(person[0]);
   });
 });
 
