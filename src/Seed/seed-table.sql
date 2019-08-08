@@ -1,1 +1,1 @@
-INSERT INTO people(person_name,dates,status,) VALUES('Ludwig Van Beethoven', '1770-1827', 'Expired and joined the choir invisible')
+INSERT INTO people(person_name,dates,status) VALUES('Ludwig Van Beethoven', '1770-1827', 'Expired and joined the choir invisible')
