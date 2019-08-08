@@ -7,6 +7,12 @@ const peopleServices = {
       .returning(["id", "person_name", "dates", "status", "description"])
       .from("people")
       .insert(person);
+  },
+  getPersonById(knex, id) {
+    return knex("people")
+      .from("people")
+      .select("*")
+      .where({ id });
   }
 };
 
