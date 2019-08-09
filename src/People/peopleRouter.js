@@ -31,36 +31,35 @@ peopleRouter.route("/").post(jsonParser, (req, res, next) => {
     })
     .catch(next);
 });
-peopleRouter.route("/:id").get((req, res, next) => {
-  const knexInstance = req.app.get("db");
-  const { id } = req.params;
-  peopleServices
-    .getPersonById(knexInstance, id)
-    .then(person => {
-      if (!person || person.length === 0) {
-        res.status(404).json({ error: { message: "Person does not exist" } });
-      }
-      res.status(200).json(person[0]);
-    })
-    .catch(next);
-
-  peopleRouter.route("/:id").delete((req, res, next) => {
+peopleRouter
+  .route("/:id")
+  .get((req, res, next) => {
+    const knexInstance = req.app.get("db");
+    const { id } = req.params;
+    peopleServices
+      .getPersonById(knexInstance, id)
+      .then(person => {
+        if (!person || person.length === 0) {
+          res.status(404).json({ error: { message: "Person does not exist" } });
+        }
+        res.status(200).json(person[0]);
+      })
+      .catch(next);
+  })
+  .delete((req, res, next) => {
     const knexInstance = req.app.get("db");
     const { id } = req.params;
     peopleServices
       .deletePerson(knexInstance, id)
-      .then(id => {
-        if (!id) {
-          res
-            .status(404)
-            .json({
-              error: { message: `person with ID ${id} doesn't exist ` }
-            });
+      .then(dbId => {
+        if (!dbId) {
+          res.status(404).json({
+            error: { message: `person with ID ${id} doesn't exist ` }
+          });
         }
-        res.status(204).send(`person with ID ${id} deleted`);
+        res.status(200).json({ message: `person with ID ${id} deleted` });
       })
       .catch(next);
   });
-});
 
 module.exports = peopleRouter;
