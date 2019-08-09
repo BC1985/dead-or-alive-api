@@ -1,12 +1,13 @@
 const knex = require("knex");
 const app = require("../src/app");
+const { TEST_DB_URL } = require("../src/config");
 
 describe("people endpoints", () => {
   let db;
   before("make knex instane", done => {
     db = knex({
       client: "pg",
-      connection: process.env.TEST_DB_URL
+      connection: TEST_DB_URL
     });
     app.set("db", db);
     done();
