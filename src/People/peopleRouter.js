@@ -60,6 +60,32 @@ peopleRouter
         res.status(200).json({ message: `person with ID ${id} deleted` });
       })
       .catch(next);
+  })
+  .put(jsonParser, (req, res, next) => {
+    const knexInstance = req.app.get("db");
+    const { id } = req.params;
+    const { person_name, dates, status, description } = req.body;
+    const personToUpdate = { person_name, dates, status, description };
+    const numberOfValues = Object.values(personToUpdate).filter(Boolean).length;
+    if (numberOfValues === 0) {
+      res.status(400).json({
+        error: {
+          message:
+            "Request body must contain eith dates, name, description or status"
+        }
+      });
+    }
+    peopleServices
+      .updatePerson(knexInstance, id, personToUpdate)
+      .then(dbId => {
+        if (!dbId) {
+          res.status(404).json({
+            message: `Person with id ${id} does not exist`
+          });
+        }
+        res.status(201).json({ message: `Person with Id ${id} updated` });
+      })
+      .catch(next);
   });
 
 module.exports = peopleRouter;
