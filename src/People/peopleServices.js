@@ -19,6 +19,12 @@ const peopleServices = {
       .from("people")
       .where({ id })
       .del();
+  },
+  updatePerson(knex, id, updatedFields) {
+    return knex("people")
+      .from("people")
+      .where({ id })
+      .update(updatedFields);
   }
 };
 
