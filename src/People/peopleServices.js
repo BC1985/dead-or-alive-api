@@ -4,7 +4,14 @@ const peopleServices = {
   },
   postPerson(knex, person) {
     return knex
-      .returning(["id", "person_name", "dates", "status", "description"])
+      .returning([
+        "id",
+        "person_name",
+        "dates",
+        "status",
+        "description",
+        "image"
+      ])
       .from("people")
       .insert(person);
   },
@@ -25,6 +32,15 @@ const peopleServices = {
       .from("people")
       .where({ id })
       .update(updatedFields);
+  },
+  personNotInDB(knex, name) {
+    return knex
+      .returning(["person_name"])
+      .from("not_in_db")
+      .insert(name);
+  },
+  getUnknownPerson(knex) {
+    return knex.select("*").from("not_in_db");
   }
 };
 
