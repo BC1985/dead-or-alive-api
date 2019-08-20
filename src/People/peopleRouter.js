@@ -14,8 +14,8 @@ peopleRouter.route("/").get((req, res, next) => {
 });
 peopleRouter.route("/").post(jsonParser, (req, res, next) => {
   const knexInstance = req.app.get("db");
-  const { person_name, dates, status, description } = req.body;
-  const newPerson = { person_name, dates, status, description };
+  const { person_name, dates, status, description, image } = req.body;
+  const newPerson = { person_name, dates, status, description, image };
   for (const [key, value] of Object.entries(newPerson))
     if (value === null) {
       return res
@@ -64,14 +64,14 @@ peopleRouter
   .put(jsonParser, (req, res, next) => {
     const knexInstance = req.app.get("db");
     const { id } = req.params;
-    const { person_name, dates, status, description } = req.body;
-    const personToUpdate = { person_name, dates, status, description };
+    const { person_name, dates, status, description, image } = req.body;
+    const personToUpdate = { person_name, dates, status, description, image };
     const numberOfValues = Object.values(personToUpdate).filter(Boolean).length;
     if (numberOfValues === 0) {
       res.status(400).json({
         error: {
           message:
-            "Request body must contain eith dates, name, description or status"
+            "Request body must contain either dates, name, description or status"
         }
       });
     }
