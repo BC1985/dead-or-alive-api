@@ -22,7 +22,6 @@ unknownPersonRouter.route("/").post(jsonParser, (req, res, next) => {
         .status(400)
         .json({ error: { message: `Missing ${key} in request body` } });
     }
-  newPerson.person_name = req.person_name;
   peopleServices
     .personNotInDB(knexInstance, newPerson)
     .then(person => {
@@ -30,7 +29,6 @@ unknownPersonRouter.route("/").post(jsonParser, (req, res, next) => {
       res.status(201).json(newPerson);
     })
     .catch(next);
-  console.log(newPerson);
 });
 
 module.exports = unknownPersonRouter;
