@@ -18,7 +18,7 @@ describe("people endpoints", () => {
       it("responds with 200 and empty list", () => {
         //run command 'TRUNCATE TABLE people;' before running
         return supertest(app)
-          .get("api/people")
+          .get("/api/people")
           .expect(200, []);
       });
     });
