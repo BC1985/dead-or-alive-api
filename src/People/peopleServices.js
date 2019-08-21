@@ -41,6 +41,13 @@ const peopleServices = {
   },
   getUnknownPerson(knex) {
     return knex.select("*").from("not_in_db");
+  },
+  //For deleting people from "not_in_db" table after they have been added to main "people" db
+  deleteUnknownPerson(knex, id) {
+    return knex("not_in_db")
+      .from("not_in_db")
+      .where({ id })
+      .del();
   }
 };
 
