@@ -1,4 +1,8 @@
-const knex = require("knex");
+const { TEST_DB_URL } = require("../src/config");
+const knex = require("knex")({
+  client: "pg",
+  connection: TEST_DB_URL
+});
 function makePeopleArray() {
   return [
     {
@@ -29,7 +33,7 @@ function makePeopleArray() {
 }
 function cleanTables() {
   knex.schema.raw("SET sql_mode='TRADITIONAL'").table("people", table => {
-    table.dropColumn("people");
+    table.dropTable("people");
     table.createTable("people", table => {
       table
         .increments("id")
