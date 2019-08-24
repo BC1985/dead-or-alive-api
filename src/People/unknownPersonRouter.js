@@ -35,6 +35,19 @@ unknownPersonRouter
 
 unknownPersonRouter
   .route("/:id")
+  .get((req, res, next) => {
+    const knexInstance = req.app.get("db");
+    const { id } = req.params;
+    peopleServices
+      .getUnknownPersonById(knexInstance, id)
+      .then(person => {
+        if (!person || person.length === 0) {
+          res.status(404).json({ error: { message: "Person does not exist" } });
+        }
+        res.status(200).json(person[0]);
+      })
+      .catch(next);
+  })
   .delete((req, res, next) => {
     const knexInstance = req.app.get("db");
     const { id } = req.params;
@@ -43,10 +56,10 @@ unknownPersonRouter
       .then(dbId => {
         if (!dbId) {
           res.status(404).json({
-            error: { message: `person with ID ${id} doesn't exist ` }
+            error: { message: `Person with ID ${id} doesn't exist` }
           });
         }
-        res.status(200).json({ message: `person with ID ${id} deleted` });
+        res.status(204).json({ message: `person with ID ${id} deleted` });
       })
       .catch(next);
   })
