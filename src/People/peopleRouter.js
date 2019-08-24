@@ -57,7 +57,7 @@ peopleRouter
             error: { message: `person with ID ${id} doesn't exist ` }
           });
         }
-        res.status(200).json({ message: `person with ID ${id} deleted` });
+        res.status(204).json({ message: `person with ID ${id} deleted` });
       })
       .catch(next);
   })
