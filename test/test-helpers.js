@@ -45,5 +45,12 @@ function cleanTables() {
     });
   });
 }
+function userNotInDB() {
+  return [
+    { id: 1, person_name: "Namey McName1" },
+    { id: 2, person_name: "Namey McName2" },
+    { id: 3, person_name: "Namey McName3" }
+  ];
+}
 
-module.exports = { makePeopleArray, cleanTables };
+module.exports = { makePeopleArray, cleanTables, userNotInDB };
