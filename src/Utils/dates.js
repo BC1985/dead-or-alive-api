@@ -1,9 +1,9 @@
 const request = require("request");
 const cheerio = require("cheerio");
 
-export function getDates() {
+function getDates() {
   const baseUrl = "https://en.wikipedia.org/wiki/";
-  const testPerson = "Nick_Drake";
+  const testPerson = "Nick_Drake"; //Case sensitive and underscore between words
   const query = `${baseUrl}${testPerson}`;
 
   request(query, (error, response, body) => {
@@ -25,8 +25,6 @@ export function getDates() {
           .join(" ")
           .slice(16, -11);
       };
-      //   console.log(shortenedBirthday(birthday, 3));
-      //   console.log(`${birthday}-${died}`);
       const shortenedDeathDate = function(str, no_words) {
         return str
           .split(" ")
@@ -38,7 +36,8 @@ export function getDates() {
       const formatted =
         shortenedBirthday(birthday, 3) + " - " + shortenedDeathDate(died, 3);
 
-      return formatted;
+      console.log(formatted);
     }
   });
 }
+getDates();
