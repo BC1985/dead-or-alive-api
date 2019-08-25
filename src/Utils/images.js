@@ -4,32 +4,11 @@ const cheerio = require("cheerio");
 function getImage() {
   const images = [];
   const baseUrl = "https://en.wikipedia.org/wiki/";
-  //   Change below to name of person to fetch image of person (case sensitive and with underscore in place)
-  const deadMusicians = [
-    "Leonard_Cohen",
-    "Janis_Joplin",
-    "Kurt_Cobain",
-    "Jim_Morisson",
-    "Ray_Manzarek",
-    "Gregg_Allman",
-    "Duane_Allman",
-    "Joe_Strummer"
-    // "Prince_(musician)"
-  ];
+  //Insert below name of musician to fetch image (case sensitive and with underscore between words) ex: David_Bowie
+  const musicians = [""];
 
-  const livingMusicians = [
-    // ray davies
-    // robby krieger
-    "Mick_Jagger",
-    "Slash_(musician)",
-    "Axl_Rose",
-    "Keith_Richards",
-    "Robert_Smith",
-    ""
-  ];
-  //switch array in loop to livingMusicians to return images
-  for (let i = 0; i < deadMusicians.length; i++) {
-    const query = `${baseUrl}${deadMusicians[i]}`;
+  for (let i = 0; i < musicians.length; i++) {
+    const query = `${baseUrl}${musicians[i]}`;
     request(query, (error, response, body) => {
       if (!error && response.statusCode == 200) {
         const $ = cheerio.load(body);
@@ -45,7 +24,9 @@ function getImage() {
         images.push(url);
         // console.log("formatted link---", url, "image in array--", images);
       }
-      console.log(images);
+      console.log("====================================");
+      console.log(images[i]);
+      console.log("====================================");
     });
   }
 }
