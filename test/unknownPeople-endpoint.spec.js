@@ -27,9 +27,7 @@ describe("people not in db enpoint", () => {
           const unknownPeopleArray = helpers.userNotInDB();
           return db.into("not_in_db").insert(unknownPeopleArray);
         });
-        // afterEach("clean tables", () => {
-        //   helpers.cleanTables();
-        // });
+
         it("responds with 200 and array of people", () => {
           return supertest(app)
             .get("/api/not_in_db")
@@ -47,10 +45,6 @@ describe("people not in db enpoint", () => {
             });
           });
           context("Given there are people in the database", () => {
-            // const unknownPeopleArray = helpers.userNotInDB();
-            // beforeEach("insert people", () => {
-            //   return db.into("not_in_db").insert(unknownPeopleArray);
-            // });
             it("responds with 200 the specified person", () => {
               const personId = 2;
               const expectedPerson = unknownPeopleArray[personId - 1];

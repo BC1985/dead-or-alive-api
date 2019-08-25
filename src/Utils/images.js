@@ -22,7 +22,6 @@ function getImage() {
         const formatted = `https:${shortenedImageUrl(image)}`;
         const url = formatted.substring(0, formatted.indexOf("/220"));
         images.push(url);
-        // console.log("formatted link---", url, "image in array--", images);
       }
       console.log("====================================");
       console.log(images[i]);

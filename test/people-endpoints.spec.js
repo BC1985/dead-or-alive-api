@@ -66,9 +66,6 @@ describe("people endpoints", () => {
       });
     });
     describe(`POST /api/reviews`, () => {
-      // beforeEach("clean tables", () => {
-      //   helpers.cleanTables();
-      // });
       it("creates an instance of a person, responds with 201 and the person info", () => {
         const newPerson = {
           person_name: "Namey McName",
@@ -89,11 +86,6 @@ describe("people endpoints", () => {
             expect(res.body.image).to.eql(newPerson.image);
             expect(res.body).to.have.property("id");
           });
-        // .then(res =>
-        //   supertest(app)
-        //     .get(`/api/people/${res.body.id}`)
-        //     .expect(res.body)
-        // );
       });
       const requiredFields = [
         "person_name",
@@ -132,13 +124,10 @@ describe("people endpoints", () => {
       });
 
       context("Given there are people in the database", () => {
-        // If no people in table, uncomment below
-
         const peopleArray = helpers.makePeopleArray();
         beforeEach("insert people", () => {
           return db.into("people").insert(peopleArray);
         });
-        ////
         it("responds with 204 and removes the review", () => {
           const idToRemove = 1;
           const expectedPeople = peopleArray.filter(
@@ -167,10 +156,6 @@ describe("people endpoints", () => {
 
           context("Given there are people in the database", () => {
             const peopleArray = helpers.makePeopleArray();
-
-            //   beforeEach("insert reviews", () => {
-            //     return db.into("reviews").insert(testReviews);
-            //   });
 
             it("responds with 204 and updates the person information", () => {
               const idToUpdate = 1;
