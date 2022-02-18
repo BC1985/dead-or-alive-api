@@ -20,13 +20,12 @@
     "express": "^4.17.0",
     "helmet": "^3.21.2",
     "knex": "^0.19.5",
-    "lodash": "^4.17.19",
-    "minimist": "^0.0.8",
+    "lodash": "^4.17.21",
     "morgan": "^1.9.1",
     "pg": "^7.12.1",
     "postgrator": "^3.10.2",
     "request": "^2.88.0",
-    "set-value": "^3.0.1"
+    "set-value": "^4.0.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
